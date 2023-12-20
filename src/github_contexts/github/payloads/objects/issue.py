@@ -102,7 +102,7 @@ class IssueObject:
 
     @property
     def performed_via_github_app(self) -> PerformedViaGitHubAppObject | None:
-        return self._issue.get("performed_via_github_app")
+        return PerformedViaGitHubAppObject(self._issue["performed_via_github_app"]) if self._issue.get("performed_via_github_app") else None
 
     @property
     def pull_request(self) -> PullRequestObject | None:
