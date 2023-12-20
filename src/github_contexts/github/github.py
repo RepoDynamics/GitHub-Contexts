@@ -143,7 +143,7 @@ class ContextManager:
 
     @property
     def ref_is_main(self) -> bool:
-        return self.github.ref == f"refs/heads/{self.payload.repository_default_branch}"
+        return self.github.ref == f"refs/heads/{self.payload.repository.default_branch}"
 
     @property
     def hash_before(self) -> str:
