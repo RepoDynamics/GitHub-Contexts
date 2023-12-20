@@ -1,3 +1,6 @@
+"""GitHub Webhook Issues Payload."""
+
+
 from github_contexts.github.payloads.base import Payload
 from github_contexts.github.enums import ActionType
 from github_contexts.github.payloads.objects.issue import IssueObject
