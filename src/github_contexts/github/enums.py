@@ -235,3 +235,46 @@ class RepositoryVisibility(Enum):
     PUBLIC = "public"
     PRIVATE = "private"
     INTERNAL = "internal"
+
+
+class MergeMethod(Enum):
+    MERGE = "merge"
+    SQUASH = "squash"
+    REBASE = "rebase"
+
+
+class MergeCommitMessage(Enum):
+    PR_TITLE = "PR_TITLE"
+    PR_BODY = "PR_BODY"
+    BLANK = "BLANK"
+
+
+class MergeCommitTitle(Enum):
+    PR_TITLE = "PR_TITLE"
+    MERGE_MESSAGE = "MERGE_MESSAGE"
+
+
+class SquashMergeCommitMessage(Enum):
+    PR_BODY = "PR_BODY"
+    COMMIT_MESSAGES = "COMMIT_MESSAGES"
+    BLANK = "BLANK"
+
+
+class SquashMergeCommitTitle(Enum):
+    PR_TITLE = "PR_TITLE"
+    COMMIT_OR_PR_TITLE = "COMMIT_OR_PR_TITLE"
+
+
+class TeamPrivacy(Enum):
+    OPEN = "open"
+    CLOSED = "closed"
+    SECRET = "secret"
+
+
+class SecretSource(Enum):
+    """The source of a secret used in a workflow."""
+
+    ACTIONS = "Actions"
+    DEPENDABOT = "Dependabot"
+    CODESPACES = "Codespaces"
+    NONE = "None"
