@@ -1,9 +1,19 @@
-class IssuesPayload(EventPayload):
+from github_contexts.github.payloads.base import Payload
+
+
+
+class IssuesPayload(Payload):
+
     def __init__(self, payload: dict):
         super().__init__(payload=payload)
-        self._payload = payload
-        self._issue = payload["issue"]
         return
+
+    @property
+    def action(self) -> WorkflowTriggeringAction | None:
+        action = self._payload.get("action")
+        if not action:
+            return None
+        return WorkflowTriggeringAction(action)
 
     @property
     def author(self) -> dict:
