@@ -1,5 +1,12 @@
 from github_contexts.github.payloads.base import Payload
-
+from github_contexts.github.enums import ActionType
+from github_contexts.github.payloads.objects.issue import IssueObject
+from github_contexts.github.payloads.objects.user import UserObject
+from github_contexts.github.payloads.objects.milestone import MilestoneObject
+from github_contexts.github.payloads.objects.label import LabelObject
+from github_contexts.github.payloads.objects.changes import (
+    IssueOpenedChangesObject, IssueEditedChangesObject, IssueTransferredChangesObject
+)
 
 
 class IssuesPayload(Payload):
@@ -9,74 +16,50 @@ class IssuesPayload(Payload):
         return
 
     @property
-    def action(self) -> WorkflowTriggeringAction | None:
-        action = self._payload.get("action")
-        if not action:
-            return None
-        return WorkflowTriggeringAction(action)
+    def action(self) -> ActionType:
+        return ActionType(self._payload["action"])
 
     @property
-    def author(self) -> dict:
-        return self._issue["user"]
+    def issue(self) -> IssueObject:
+        """The issue data.
 
-    @property
-    def author_association(
-        self,
-    ) -> Literal[
-        "OWNER",
-        "MEMBER",
-        "COLLABORATOR",
-        "CONTRIBUTOR",
-        "FIRST_TIMER",
-        "FIRST_TIME_CONTRIBUTOR",
-        "MANNEQUIN",
-        "NONE",
-    ]:
-        return self._issue["author_association"]
-
-    @property
-    def author_username(self) -> str:
-        return self.author["login"]
-
-    @property
-    def title(self) -> str:
-        """Title of the issue."""
-        return self._issue["title"]
-
-    @property
-    def body(self) -> str | None:
-        """Contents of the issue."""
-        return self._issue["body"]
-
-    @property
-    def comments_count(self) -> int:
-        return self._issue["comments"]
-
-    @property
-    def label(self) -> dict | None:
+        References
+        ----------
+        - [GitHub API Docs](https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#get-an-issue)
         """
-        The label that was added or removed from the issue.
+        return IssueObject(self._payload["issue"])
+
+    @property
+    def assignee(self) -> UserObject | None:
+        """The user that was assigned or unassigned from the issue.
+
+        This is only available for the 'assigned' and 'unassigned' events.
+        """
+        return UserObject(self._payload.get("assignee"))
+
+    @property
+    def changes(self) -> IssueOpenedChangesObject | IssueEditedChangesObject | IssueTransferredChangesObject | None:
+        """The changes to the issue if the action was 'edited'."""
+        if self.action == ActionType.EDITED:
+            return IssueEditedChangesObject(self._payload["changes"])
+        if self.action == ActionType.OPENED:
+            return IssueOpenedChangesObject(self._payload["changes"])
+        if self.action == ActionType.TRANSFERRED:
+            return IssueTransferredChangesObject(self._payload["changes"])
+        return
+
+    @property
+    def label(self) -> LabelObject | None:
+        """The label that was added or removed from the issue.
 
         This is only available for the 'labeled' and 'unlabeled' events.
         """
-        return self._payload.get("label")
+        return LabelObject(self._payload["label"]) if self._payload.get("label") else None
 
     @property
-    def labels(self) -> list[dict]:
-        return self._issue["labels"]
+    def milestone(self) -> MilestoneObject | None:
+        """The milestone that was added to or removed from the issue.
 
-    @property
-    def label_names(self) -> list[str]:
-        return [label["name"] for label in self.labels]
-
-    @property
-    def node_id(self) -> str:
-        return self._issue["node_id"]
-
-    @property
-    def number(self) -> int:
-        return self._issue["number"]
-
-    @property
-    def state(self) -> Literal["open", "closed"]:
-        return self._issue["state"]
+        This is only available for the 'milestoned' and 'demilestoned' events.
+        """
+        return MilestoneObject(self._payload.get("milestone"))
