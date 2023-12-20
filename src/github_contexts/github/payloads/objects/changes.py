@@ -45,3 +45,40 @@ class IssueEditedChangesObject:
     @property
     def title(self) -> dict | None:
         return self._changes.get("title")
+
+
+class PullRequestEditedChangesObject:
+
+    def __init__(self, changes: dict):
+        self._changes = changes
+        return
+
+    @property
+    def base_ref(self) -> str | None:
+        return self._changes.get("base", {}).get("ref", {}).get("from")
+
+    @property
+    def base_sha(self) -> str | None:
+        return self._changes.get("base", {}).get("sha", {}).get("from")
+
+    @property
+    def body(self) -> str | None:
+        """"The previous version of the body."""
+        return self._changes.get("body", {}).get("from")
+
+    @property
+    def title(self) -> dict | None:
+        """The previous version of the title."""
+        return self._changes.get("title", {}).get("from")
+
+
+class IssueCommentEditedChangesObject:
+
+    def __init__(self, changes: dict):
+        self._changes = changes
+        return
+
+    @property
+    def body(self) -> str | None:
+        """The previous version of the body."""
+        return self._changes.get("body", {}).get("from")
