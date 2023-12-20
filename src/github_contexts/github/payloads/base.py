@@ -1,3 +1,6 @@
+"""Base class for all GitHub webhook payloads."""
+
+
 from ruamel.yaml import YAML
 
 from github_contexts.github.payloads.objects.user import UserObject
