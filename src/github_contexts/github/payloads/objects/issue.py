@@ -41,6 +41,7 @@ class IssueObject:
 
     @property
     def body(self) -> str | None:
+        """Contents of the issue."""
         return self._issue["body"]
 
     @property
@@ -129,6 +130,7 @@ class IssueObject:
 
     @property
     def title(self) -> str:
+        """Title of the issue."""
         return self._issue["title"]
 
     @property
@@ -140,5 +142,9 @@ class IssueObject:
         return self._issue["url"]
 
     @property
-    def user(self) -> UserObject:
+    def user(self) -> UserObject | None:
         return UserObject(self._issue["user"]) if self._issue.get("user") else None
+
+    @property
+    def label_names(self) -> list[str]:
+        return [label.name for label in self.labels]
