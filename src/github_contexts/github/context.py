@@ -40,6 +40,9 @@ class GitHubContext:
     def __str__(self):
         return YAML(typ=["rt", "string"]).dumps(self._context, add_final_eol=True)
 
+    def __getitem__(self, item):
+        return self._context[item]
+
     @property
     def action(self) -> str | None:
         """The name of the action currently running, or the id of a step.
