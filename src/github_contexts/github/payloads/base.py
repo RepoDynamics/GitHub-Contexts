@@ -1,7 +1,10 @@
 from ruamel.yaml import YAML
 
+from github_contexts.github.payloads.objects.user import UserObject
+from github_contexts.github.payloads.objects.repository import RepositoryObject
 
-class EventPayload:
+
+class Payload:
     """
     The full webhook payload of the triggering event.
 
@@ -18,31 +21,40 @@ class EventPayload:
         return YAML(typ=["rt", "string"]).dumps(self._payload, add_final_eol=True)
 
     @property
-    def action(self) -> WorkflowTriggeringAction | None:
-        action = self._payload.get("action")
-        if not action:
-            return None
-        return WorkflowTriggeringAction(action)
+    def enterprise(self) -> dict | None:
+        """An enterprise on GitHub.
+
+        This is only available when the webhook is configured on an enterprise account
+        or an organization that's part of an enterprise account.
+        """
+        return self._payload.get("enterprise")
 
     @property
-    def repository(self) -> dict:
-        """The repository on GitHub where the event occurred."""
-        return self._payload["repository"]
+    def installation(self) -> dict | None:
+        """The GitHub App installation.
+
+        This is only available when the event is configured for and sent to a GitHub App.
+        """
+        return self._payload.get("installation")
 
     @property
-    def sender(self) -> dict:
+    def organization(self) -> dict | None:
+        """An organization on GitHub.
+
+        This is only available when the event occurs from activity in a repository owned by an organization,
+        or when the webhook is configured for an organization.
+        """
+        return self._payload.get("organization")
+
+    @property
+    def repository(self) -> RepositoryObject | None:
+        """The repository on GitHub where the event occurred.
+
+        This is only available when the event occurs from activity in the repository.
+        """
+        return RepositoryObject(self._payload["repository"]) if "repository" in self._payload else None
+
+    @property
+    def sender(self) -> UserObject:
         """The GitHub user that triggered the event."""
-        return self._payload["sender"]
-
-    @property
-    def repository_default_branch(self) -> str:
-        return self.repository["default_branch"]
-
-    @property
-    def sender_username(self) -> str:
-        """GitHub username of the user or app that triggered the event."""
-        return self.sender["login"]
-
-    @property
-    def sender_email(self) -> str:
-        return f"{self.sender['id']}+{self.sender_username}@users.noreply.github.com"
+        return UserObject(self._payload["sender"])
