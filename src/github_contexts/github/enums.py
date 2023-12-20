@@ -120,56 +120,86 @@ class ActionType(Enum):
     Attributes
     ----------
     ASSIGNED : str
-        Available for `issues`.
+        An issue or pull request was assigned to a user.
+        Available for `issues`, `pull_request`.
     AUTO_MERGE_DISABLED : str
+        Auto merge was disabled for a pull request.
         Available for `pull_request`.
     AUTO_MERGE_ENABLED : str
+        Auto merge was enabled for a pull request.
         Available for `pull_request`.
     CLOSED : str
+        An issue or pull request was closed.
         Available for `issues`, `pull_request`.
     CONVERTED_TO_DRAFT : str
+        A pull request was converted to a draft.
         Available for `pull_request`.
     CREATED : str
+        A comment on an issue or pull request was created.
         Available for `issue_comment`.
     DELETED : str
+        An issue, pull request, or a comment on an issue or pull request was deleted.
         Available for `issue_comment`, `issues`, `pull_request`.
     DEMILESTONED : str
+        An issue or pull request was removed from a milestone.
         Available for `issues`, `pull_request`.
     DEQUEUED : str
+        A pull request was removed from the merge queue.
         Available for `pull_request`.
     EDITED : str
+        The title or body on an issue or pull request,
+        or a comment on an issue or pull request was edited,
+        or the base branch of a pull request was changed.
         Available for `issue_comment`, `issues`, `pull_request`.
     ENQUEUED : str
+        A pull request was added to the merge queue.
         Available for `pull_request`.
     LABELED : str
+        A label was added to an issue or pull request.
         Available for `issues`, `pull_request`.
     LOCKED : str
+        Conversation on an issue or pull request was locked.
         Available for `issues`, `pull_request`.
     MILESTONED : str
+        An issue or pull reqeust was added to a milestone.
         Available for `issues`, `pull_request`.
     OPENED : str
+        An issue or pull request was created.
         Available for `issues`, `pull_request`.
     PINNED : str
+        An issue was pinned to a repository.
         Available for `issues`.
     READY_FOR_REVIEW : str
+        A draft pull request was marked as ready for review.
         Available for `pull_request`.
     REOPENED : str
+        A closed issue or pull request was reopened.
         Available for `issues`, `pull_request`.
     REVIEW_REQUEST_REMOVED : str
+        A request for review by a person or team was removed from a pull request.
         Available for `pull_request`.
     REVIE_REQUESTED : str
+        Review by a person or team was requested for a pull request.
         Available for `pull_request`.
     SYNCHRONIZE : str
+        A pull request's head branch was updated.
+        For example, the head branch was updated from the base branch
+        or new commits were pushed to the head branch.
         Available for `pull_request`.
     TRANSFERRED : str
+        An issue was transferred to another repository.
         Available for `issues`.
     UNASSIGNED : str
+        A user was unassigned from an issue or pull request.
         Available for `issues`, `pull_request`.
     UNLABELED : str
+        A label was removed from an issue or pull request.
         Available for `issues`, `pull_request`.
     UNLOCKED : str
+        Conversation on an issue or pull request was unlocked.
         Available for `issues`, `pull_request`.
     UNPINNED : str
+        An issue was unpinned from a repository.
         Available for `issues`.
     """
 
@@ -201,3 +231,7 @@ class ActionType(Enum):
     UNPINNED = "unpinned"
 
 
+class RepositoryVisibility(Enum):
+    PUBLIC = "public"
+    PRIVATE = "private"
+    INTERNAL = "internal"
