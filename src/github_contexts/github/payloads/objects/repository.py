@@ -1,7 +1,13 @@
 from github_contexts.github.payloads.objects.license import LicenseObject
 from github_contexts.github.payloads.objects.user import UserObject
 from github_contexts.github.payloads.objects.permissions import PermissionsObject
-from github_contexts.github.enums import RepositoryVisibility
+from github_contexts.github.enums import (
+    RepositoryVisibility,
+    MergeCommitTitle,
+    MergeCommitMessage,
+    SquashMergeCommitMessage,
+    SquashMergeCommitTitle
+)
 
 
 class RepositoryObject:
@@ -192,6 +198,7 @@ class RepositoryObject:
 
     @property
     def id(self) -> int:
+        "Unique identifier of the repository."
         return self._repository["id"]
 
     @property
@@ -233,6 +240,14 @@ class RepositoryObject:
     @property
     def master_branch(self) -> str | None:
         return self._repository.get("master_branch") or self.default_branch
+
+    @property
+    def merge_commit_message(self) -> MergeCommitMessage | None:
+        return MergeCommitMessage(self._repository["merge_commit_message"]) if self._repository.get("merge_commit_message") else None
+
+    @property
+    def merge_commit_title(self) -> MergeCommitTitle | None:
+        return MergeCommitTitle(self._repository["merge_commit_title"]) if self._repository.get("merge_commit_title") else None
 
     @property
     def merges_url(self) -> str:
@@ -307,6 +322,20 @@ class RepositoryObject:
     @property
     def size(self) -> int:
         return self._repository["size"]
+
+    @property
+    def squash_merge_commit_message(self) -> SquashMergeCommitMessage | None:
+        return (
+            SquashMergeCommitMessage(self._repository["squash_merge_commit_message"])
+            if self._repository.get("squash_merge_commit_message") else None
+        )
+
+    @property
+    def squash_merge_commit_title(self) -> SquashMergeCommitTitle | None:
+        return (
+            SquashMergeCommitTitle(self._repository["squash_merge_commit_title"])
+            if self._repository.get("squash_merge_commit_title") else None
+        )
 
     @property
     def ssh_url(self) -> str:
