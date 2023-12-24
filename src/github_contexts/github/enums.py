@@ -117,7 +117,7 @@ class EventType(Enum):
 class ActionType(Enum):
     """
     Triggering actions of events that can trigger a workflow.
-    Each action is only valid for certain events. For example:
+    Each action is only available for certain events.
 
     Attributes
     ----------
