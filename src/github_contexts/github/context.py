@@ -7,6 +7,7 @@ from github_contexts.github.payloads.issue_comment import IssueCommentPayload
 from github_contexts.github.payloads.issues import IssuesPayload
 from github_contexts.github.payloads.pull_request import PullRequestPayload
 from github_contexts.github.payloads.push import PushPayload
+from github_contexts.github.payloads.schedule import SchedulePayload
 from github_contexts.github.enums import EventType, ActionType
 
 
@@ -27,6 +28,7 @@ class GitHubContext:
             EventType.PUSH: PushPayload,
             EventType.ISSUE_COMMENT: IssueCommentPayload,
             EventType.PULL_REQUEST: PullRequestPayload,
+            EventType.SCHEDULE: SchedulePayload,
         }
         payload = context.pop("event")
         self._token = context.pop("token")
@@ -122,7 +124,7 @@ class GitHubContext:
         return self._context["env"]
 
     @property
-    def event(self) -> IssueCommentPayload | IssuesPayload | PullRequestPayload | PushPayload | Payload:
+    def event(self) -> IssueCommentPayload | IssuesPayload | PullRequestPayload | PushPayload | SchedulePayload | Payload:
         """The full event webhook payload.
 
         This is identical to the webhook payload of the event that triggered the workflow run,
