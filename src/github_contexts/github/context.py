@@ -8,6 +8,7 @@ from github_contexts.github.payloads.issues import IssuesPayload
 from github_contexts.github.payloads.pull_request import PullRequestPayload
 from github_contexts.github.payloads.push import PushPayload
 from github_contexts.github.payloads.schedule import SchedulePayload
+from github_contexts.github.payloads.workflow_dispatch import WorkflowDispatchPayload
 from github_contexts.github.enums import EventType, ActionType
 
 
@@ -28,7 +29,9 @@ class GitHubContext:
             EventType.PUSH: PushPayload,
             EventType.ISSUE_COMMENT: IssueCommentPayload,
             EventType.PULL_REQUEST: PullRequestPayload,
+            EventType.PULL_REQUEST_TARGET: PullRequestPayload,
             EventType.SCHEDULE: SchedulePayload,
+            EventType.WORKFLOW_DISPATCH: WorkflowDispatchPayload,
         }
         payload = context.pop("event")
         self._token = context.pop("token")
