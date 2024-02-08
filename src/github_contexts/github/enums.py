@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import Enum as _Enum
 
 
-class ActiveLockReason(Enum):
+class ActiveLockReason(_Enum):
     RESOLVED = "resolved"
     OFF_TOPIC = "off-topic"
     TOO_HEATED = "too heated"
@@ -9,7 +9,7 @@ class ActiveLockReason(Enum):
     OTHER = None
 
 
-class AuthorAssociation(Enum):
+class AuthorAssociation(_Enum):
     OWNER = "OWNER"
     MEMBER = "MEMBER"
     CONTRIBUTOR = "CONTRIBUTOR"
@@ -20,23 +20,23 @@ class AuthorAssociation(Enum):
     NONE = "NONE"
 
 
-class State(Enum):
+class State(_Enum):
     OPEN = "open"
     CLOSED = "closed"
 
 
-class RefType(Enum):
+class RefType(_Enum):
     BRANCH = "branch"
     TAG = "tag"
 
 
-class UserType(Enum):
+class UserType(_Enum):
     USER = "User"
     ORGANIZATION = "Organization"
     BOT = "Bot"
 
 
-class EventType(Enum):
+class EventType(_Enum):
     BRANCH_PROTECTION_CONFIGURATION = "branch_protection_configuration"
     BRANCH_PROTECTION_RULE = "branch_protection_rule"
     CHECK_RUN = "check_run"
@@ -114,7 +114,7 @@ class EventType(Enum):
     WORKFLOW_RUN = "workflow_run"
 
 
-class ActionType(Enum):
+class ActionType(_Enum):
     """
     Triggering actions of events that can trigger a workflow.
     Each action is only available for certain events.
@@ -233,47 +233,47 @@ class ActionType(Enum):
     UNPINNED = "unpinned"
 
 
-class RepositoryVisibility(Enum):
+class RepositoryVisibility(_Enum):
     PUBLIC = "public"
     PRIVATE = "private"
     INTERNAL = "internal"
 
 
-class MergeMethod(Enum):
+class MergeMethod(_Enum):
     MERGE = "merge"
     SQUASH = "squash"
     REBASE = "rebase"
 
 
-class MergeCommitMessage(Enum):
+class MergeCommitMessage(_Enum):
     PR_TITLE = "PR_TITLE"
     PR_BODY = "PR_BODY"
     BLANK = "BLANK"
 
 
-class MergeCommitTitle(Enum):
+class MergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
     MERGE_MESSAGE = "MERGE_MESSAGE"
 
 
-class SquashMergeCommitMessage(Enum):
+class SquashMergeCommitMessage(_Enum):
     PR_BODY = "PR_BODY"
     COMMIT_MESSAGES = "COMMIT_MESSAGES"
     BLANK = "BLANK"
 
 
-class SquashMergeCommitTitle(Enum):
+class SquashMergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
     COMMIT_OR_PR_TITLE = "COMMIT_OR_PR_TITLE"
 
 
-class TeamPrivacy(Enum):
+class TeamPrivacy(_Enum):
     OPEN = "open"
     CLOSED = "closed"
     SECRET = "secret"
 
 
-class SecretSource(Enum):
+class SecretSource(_Enum):
     """The source of a secret used in a workflow."""
 
     ACTIONS = "Actions"
