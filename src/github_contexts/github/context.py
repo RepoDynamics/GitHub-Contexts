@@ -127,7 +127,7 @@ class GitHubContext:
         return self._context["env"]
 
     @property
-    def event(self) -> IssueCommentPayload | IssuesPayload | PullRequestPayload | PushPayload | SchedulePayload | Payload:
+    def event(self) -> IssueCommentPayload | IssuesPayload | PullRequestPayload | PushPayload | SchedulePayload | WorkflowDispatchPayload | Payload:
         """The full event webhook payload.
 
         This is identical to the webhook payload of the event that triggered the workflow run,
