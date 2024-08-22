@@ -1,4 +1,4 @@
-from github_contexts.github.payloads.base import Payload
+from github_contexts.github.payload.base import Payload
 
 
 class WorkflowDispatchPayload(Payload):

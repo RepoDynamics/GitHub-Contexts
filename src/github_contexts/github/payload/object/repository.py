@@ -1,7 +1,7 @@
-from github_contexts.github.payloads.objects.license import LicenseObject
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.permissions import PermissionsObject
-from github_contexts.github.enums import (
+from github_contexts.github.payload.object.license import License
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.permissions import Permissions
+from github_contexts.github.enum import (
     RepositoryVisibility,
     MergeCommitTitle,
     MergeCommitMessage,
@@ -10,7 +10,7 @@ from github_contexts.github.enums import (
 )
 
 
-class RepositoryObject:
+class Repository:
 
     def __init__(self, repository: dict):
         self._repository = repository
@@ -234,8 +234,8 @@ class RepositoryObject:
         return self._repository["languages_url"]
 
     @property
-    def license(self) -> LicenseObject | None:
-        return LicenseObject(self._repository["license"]) if self._repository.get("license") else None
+    def license(self) -> License | None:
+        return License(self._repository["license"]) if self._repository.get("license") else None
 
     @property
     def master_branch(self) -> str | None:
@@ -286,12 +286,12 @@ class RepositoryObject:
         return self._repository.get("organization")
 
     @property
-    def owner(self) -> UserObject | None:
-        return UserObject(self._repository["owner"]) if self._repository.get("owner") else None
+    def owner(self) -> User | None:
+        return User(self._repository["owner"]) if self._repository.get("owner") else None
 
     @property
-    def permissions(self) -> PermissionsObject | None:
-        return PermissionsObject(self._repository["permissions"]) if self._repository.get("permissions") else None
+    def permissions(self) -> Permissions | None:
+        return Permissions(self._repository["permissions"]) if self._repository.get("permissions") else None
 
     @property
     def private(self) -> bool:

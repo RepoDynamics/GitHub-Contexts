@@ -1,5 +1,5 @@
 
-class LicenseObject:
+class License:
 
     def __init__(self, license_data: dict):
         self._license = license_data

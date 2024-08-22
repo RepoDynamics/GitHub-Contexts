@@ -1,11 +1,11 @@
 """GitHub Milestone Object"""
 
 
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.enums import State
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.enum import State
 
 
-class MilestoneObject:
+class Milestone:
     """GitHub Milestone Object"""
 
     def __init__(self, data: dict):
@@ -31,8 +31,8 @@ class MilestoneObject:
         return self._milestone["created_at"]
 
     @property
-    def creator(self) -> UserObject | None:
-        return UserObject(self._milestone["creator"]) if self._milestone.get("creator") else None
+    def creator(self) -> User | None:
+        return User(self._milestone["creator"]) if self._milestone.get("creator") else None
 
     @property
     def description(self) -> str | None:

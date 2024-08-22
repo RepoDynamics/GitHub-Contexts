@@ -1,10 +1,10 @@
-from github_contexts.github.enums import AuthorAssociation
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.performed_via_github_app import PerformedViaGitHubAppObject
-from github_contexts.github.payloads.objects.reactions import ReactionsObject
+from github_contexts.github.enum import AuthorAssociation
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.performed_via_github_app import PerformedViaGitHubApp
+from github_contexts.github.payload.object.reactions import Reactions
 
 
-class CommentObject:
+class Comment:
 
     def __init__(self, comment: dict):
         self._comment = comment
@@ -45,14 +45,14 @@ class CommentObject:
         return self._comment["node_id"]
 
     @property
-    def performed_via_github_app(self) -> PerformedViaGitHubAppObject | None:
+    def performed_via_github_app(self) -> PerformedViaGitHubApp | None:
         """GitHub App that performed the comment."""
-        return PerformedViaGitHubAppObject(self._comment["performed_via_github_app"]) if self._comment.get("performed_via_github_app") else None
+        return PerformedViaGitHubApp(self._comment["performed_via_github_app"]) if self._comment.get("performed_via_github_app") else None
 
     @property
-    def reactions(self) -> ReactionsObject:
+    def reactions(self) -> Reactions:
         """Reactions to the comment."""
-        return ReactionsObject(self._comment["reactions"])
+        return Reactions(self._comment["reactions"])
 
     @property
     def updated_at(self) -> str:
@@ -65,6 +65,6 @@ class CommentObject:
         return self._comment["url"]
 
     @property
-    def user(self) -> UserObject | None:
+    def user(self) -> User | None:
         """User who created the comment."""
-        return UserObject(self._comment["user"]) if self._comment.get("user") else None
+        return User(self._comment["user"]) if self._comment.get("user") else None

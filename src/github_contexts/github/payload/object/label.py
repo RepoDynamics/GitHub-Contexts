@@ -1,6 +1,6 @@
 
 
-class LabelObject:
+class Label:
 
     def __init__(self, label: dict):
         self._label = label

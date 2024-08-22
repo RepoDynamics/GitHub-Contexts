@@ -1,8 +1,8 @@
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.enums import MergeMethod
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.enum import MergeMethod
 
 
-class AutoMergeObject:
+class AutoMerge:
     """The status of auto merging a pull request."""
 
     def __init__(self, auto_merge: dict):
@@ -26,9 +26,9 @@ class AutoMergeObject:
         return self._auto_merge.get("commit_title")
 
     @property
-    def enabled_by(self) -> UserObject | None:
+    def enabled_by(self) -> User | None:
         """The user who enabled auto merging."""
-        return UserObject(self._auto_merge["enabled_by"]) if self._auto_merge.get("enabled_by") else None
+        return User(self._auto_merge["enabled_by"]) if self._auto_merge.get("enabled_by") else None
 
     @property
     def merge_method(self) -> MergeMethod:

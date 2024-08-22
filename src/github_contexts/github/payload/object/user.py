@@ -1,7 +1,7 @@
-from github_contexts.github.enums import UserType
+from github_contexts.github.enum import UserType
 
 
-class UserObject:
+class User:
 
     def __init__(self, user: dict):
         self._user = user

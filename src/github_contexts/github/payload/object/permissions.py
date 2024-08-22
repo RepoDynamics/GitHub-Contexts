@@ -1,5 +1,5 @@
 
-class PermissionsObject:
+class Permissions:
 
     def __init__(self, permissions: dict):
         self._permissions = permissions

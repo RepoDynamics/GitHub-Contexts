@@ -1,5 +1,5 @@
 
-class CommitAuthorObject:
+class CommitAuthor:
 
     def __init__(self, author: dict):
         self._author = author

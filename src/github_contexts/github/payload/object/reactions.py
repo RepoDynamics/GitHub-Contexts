@@ -1,5 +1,5 @@
 
-class ReactionsObject:
+class Reactions:
 
     def __init__(self, reactions: dict):
         self._reactions = reactions

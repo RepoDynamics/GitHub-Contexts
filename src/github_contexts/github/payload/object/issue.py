@@ -1,13 +1,13 @@
-from github_contexts.github.enums import ActiveLockReason, AuthorAssociation, State
-from github_contexts.github.payloads.objects.label import LabelObject
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.milestone import MilestoneObject
-from github_contexts.github.payloads.objects.performed_via_github_app import PerformedViaGitHubAppObject
-from github_contexts.github.payloads.objects.pull_request import PullRequestObject
-from github_contexts.github.payloads.objects.reactions import ReactionsObject
+from github_contexts.github.enum import ActiveLockReason, AuthorAssociation, State
+from github_contexts.github.payload.object.label import Label
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.milestone import Milestone
+from github_contexts.github.payload.object.performed_via_github_app import PerformedViaGitHubApp
+from github_contexts.github.payload.object.pull_request import PullRequest
+from github_contexts.github.payload.object.reactions import Reactions
 
 
-class IssueObject:
+class Issue:
     """
     The `issue` object contained in the payload of the `issues` and `issue_comment` events.
     """
@@ -27,13 +27,13 @@ class IssueObject:
         return ActiveLockReason(self._issue["active_lock_reason"])
 
     @property
-    def assignee(self) -> UserObject | None:
-        return UserObject(self._issue["assignee"]) if "assignee" in self._issue else None
+    def assignee(self) -> User | None:
+        return User(self._issue["assignee"]) if "assignee" in self._issue else None
 
     @property
-    def assignees(self) -> list[UserObject]:
+    def assignees(self) -> list[User]:
         assignees_list = self._issue.get("assignees", [])
-        return [UserObject(assignee) for assignee in assignees_list if assignee]
+        return [User(assignee) for assignee in assignees_list if assignee]
 
     @property
     def author_association(self) -> AuthorAssociation:
@@ -77,8 +77,8 @@ class IssueObject:
         return self._issue["id"]
 
     @property
-    def labels(self) -> list[LabelObject]:
-        return [LabelObject(label) for label in self._issue.get("labels", [])]
+    def labels(self) -> list[Label]:
+        return [Label(label) for label in self._issue.get("labels", [])]
 
     @property
     def labels_url(self) -> str:
@@ -89,8 +89,8 @@ class IssueObject:
         return self._issue.get("locked")
 
     @property
-    def milestone(self) -> MilestoneObject | None:
-        return MilestoneObject(self._issue["milestone"]) if self._issue.get("milestone") else None
+    def milestone(self) -> Milestone | None:
+        return Milestone(self._issue["milestone"]) if self._issue.get("milestone") else None
 
     @property
     def node_id(self) -> str:
@@ -101,16 +101,16 @@ class IssueObject:
         return self._issue["number"]
 
     @property
-    def performed_via_github_app(self) -> PerformedViaGitHubAppObject | None:
-        return PerformedViaGitHubAppObject(self._issue["performed_via_github_app"]) if self._issue.get("performed_via_github_app") else None
+    def performed_via_github_app(self) -> PerformedViaGitHubApp | None:
+        return PerformedViaGitHubApp(self._issue["performed_via_github_app"]) if self._issue.get("performed_via_github_app") else None
 
     @property
-    def pull_request(self) -> PullRequestObject | None:
-        return PullRequestObject(self._issue["pull_request"]) if self._issue.get("pull_request") else None
+    def pull_request(self) -> PullRequest | None:
+        return PullRequest(self._issue["pull_request"]) if self._issue.get("pull_request") else None
 
     @property
-    def reactions(self) -> ReactionsObject:
-        return ReactionsObject(self._issue["reactions"])
+    def reactions(self) -> Reactions:
+        return Reactions(self._issue["reactions"])
 
     @property
     def repository_url(self) -> str:
@@ -142,8 +142,8 @@ class IssueObject:
         return self._issue["url"]
 
     @property
-    def user(self) -> UserObject | None:
-        return UserObject(self._issue["user"]) if self._issue.get("user") else None
+    def user(self) -> User | None:
+        return User(self._issue["user"]) if self._issue.get("user") else None
 
     @property
     def label_names(self) -> list[str]:

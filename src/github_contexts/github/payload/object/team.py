@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import Union
 
-from github_contexts.github.enums import TeamPrivacy
+from github_contexts.github.enum import TeamPrivacy
 
 
-class TeamObject:
+class Team:
 
     def __init__(self, team: dict):
         self._team = team
@@ -39,8 +39,8 @@ class TeamObject:
         return self._team["node_id"]
 
     @property
-    def parent(self) -> Union["TeamObject", None]:
-        return TeamObject(self._team["parent"]) if self._team.get("parent") else None
+    def parent(self) -> Union["Team", None]:
+        return Team(self._team["parent"]) if self._team.get("parent") else None
 
     @property
     def permission(self) -> str | None:

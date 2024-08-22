@@ -1,8 +1,8 @@
-from github_contexts.github.payloads.objects.repository import RepositoryObject
-from github_contexts.github.payloads.objects.user import UserObject
+from github_contexts.github.payload.object.repository import Repository
+from github_contexts.github.payload.object.user import User
 
 
-class HeadBaseObject:
+class HeadBase:
     """Head or base branch info for a pull request."""
 
     def __init__(self, head_or_base: dict):
@@ -26,9 +26,9 @@ class HeadBaseObject:
         return self._branch["ref"]
 
     @property
-    def repo(self) -> RepositoryObject:
+    def repo(self) -> Repository:
         """The repository that contains the branch."""
-        return RepositoryObject(self._branch["repo"])
+        return Repository(self._branch["repo"])
 
     @property
     def sha(self) -> str:
@@ -36,5 +36,5 @@ class HeadBaseObject:
         return self._branch["sha"]
 
     @property
-    def user(self) -> UserObject | None:
-        return UserObject(self._branch["user"]) if self._branch.get("user") else None
+    def user(self) -> User | None:
+        return User(self._branch["user"]) if self._branch.get("user") else None

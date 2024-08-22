@@ -1,13 +1,13 @@
 
-from github_contexts.github.payloads.base import Payload
-from github_contexts.github.enums import ActionType
-from github_contexts.github.payloads.objects.pull_request import PullRequestObject
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.team import TeamObject
-from github_contexts.github.payloads.objects.milestone import MilestoneObject
-from github_contexts.github.payloads.objects.label import LabelObject
-from github_contexts.github.payloads.objects.changes import (
-    PullRequestEditedChangesObject
+from github_contexts.github.payload.base import Payload
+from github_contexts.github.enum import ActionType
+from github_contexts.github.payload.object.pull_request import PullRequest
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.team import Team
+from github_contexts.github.payload.object.milestone import Milestone
+from github_contexts.github.payload.object.label import Label
+from github_contexts.github.payload.object.changes import (
+    PullRequestEditedChanges
 )
 
 
@@ -28,8 +28,8 @@ class PullRequestPayload(Payload):
         return self._payload["number"]
 
     @property
-    def pull_request(self) -> PullRequestObject:
-        return PullRequestObject(self._pull_request)
+    def pull_request(self) -> PullRequest:
+        return PullRequest(self._pull_request)
 
     @property
     def internal(self) -> bool:
@@ -46,12 +46,12 @@ class PullRequestPayload(Payload):
         return self._payload.get("after")
 
     @property
-    def assignee(self) -> UserObject | None:
+    def assignee(self) -> User | None:
         """The user that was assigned or unassigned from the pull request.
 
         This is only available for the 'assigned' and 'unassigned' events.
         """
-        return UserObject(self._payload.get("assignee"))
+        return User(self._payload.get("assignee"))
 
     @property
     def before(self) -> str | None:
@@ -63,27 +63,27 @@ class PullRequestPayload(Payload):
         return self._payload.get("before")
 
     @property
-    def changes(self) -> PullRequestEditedChangesObject | None:
+    def changes(self) -> PullRequestEditedChanges | None:
         """The changes to the pull request if the action was 'edited'."""
         if self.action == ActionType.EDITED:
-            return PullRequestEditedChangesObject(self._payload["changes"])
+            return PullRequestEditedChanges(self._payload["changes"])
         return
 
     @property
-    def label(self) -> LabelObject | None:
+    def label(self) -> Label | None:
         """The label that was added or removed from the pull request.
 
         This is only available for the 'labeled' and 'unlabeled' events.
         """
-        return LabelObject(self._payload["label"]) if self._payload.get("label") else None
+        return Label(self._payload["label"]) if self._payload.get("label") else None
 
     @property
-    def milestone(self) -> MilestoneObject | None:
+    def milestone(self) -> Milestone | None:
         """The milestone that was added to or removed from the pull request.
 
         This is only available for the 'milestoned' and 'demilestoned' events.
         """
-        return MilestoneObject(self._payload.get("milestone"))
+        return Milestone(self._payload.get("milestone"))
 
     @property
     def reason(self) -> str | None:
@@ -93,17 +93,17 @@ class PullRequestPayload(Payload):
         return self._payload.get("reason")
 
     @property
-    def requested_reviewer(self) -> UserObject | None:
+    def requested_reviewer(self) -> User | None:
         """The user that was requested for review.
 
         This is only available for the 'review_request_removed', 'review_requested' events.
         """
-        return UserObject(self._payload["requested_reviewer"]) if self._payload.get("requested_reviewer") else None
+        return User(self._payload["requested_reviewer"]) if self._payload.get("requested_reviewer") else None
 
     @property
-    def requested_team(self) -> TeamObject | None:
+    def requested_team(self) -> Team | None:
         """The team that was requested for review.
 
         This is only available for the 'review_request_removed', 'review_requested' events.
         """
-        return TeamObject(self._payload["requested_team"]) if self._payload.get("requested_team") else None
+        return Team(self._payload["requested_team"]) if self._payload.get("requested_team") else None

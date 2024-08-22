@@ -1,13 +1,13 @@
-from github_contexts.github.enums import ActiveLockReason, AuthorAssociation, State
-from github_contexts.github.payloads.objects.label import LabelObject
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.milestone import MilestoneObject
-from github_contexts.github.payloads.objects.auto_merge import AutoMergeObject
-from github_contexts.github.payloads.objects.head_base import HeadBaseObject
-from github_contexts.github.payloads.objects.team import TeamObject
+from github_contexts.github.enum import ActiveLockReason, AuthorAssociation, State
+from github_contexts.github.payload.object.label import Label
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.milestone import Milestone
+from github_contexts.github.payload.object.auto_merge import AutoMerge
+from github_contexts.github.payload.object.head_base import HeadBase
+from github_contexts.github.payload.object.team import Team
 
 
-class PullRequestObject:
+class PullRequest:
 
     def __init__(self, pull_request: dict):
         self._pull_request = pull_request
@@ -22,26 +22,26 @@ class PullRequestObject:
         return self._pull_request.get("additions")
 
     @property
-    def assignee(self) -> UserObject | None:
-        return UserObject(self._pull_request["assignee"]) if "assignee" in self._pull_request else None
+    def assignee(self) -> User | None:
+        return User(self._pull_request["assignee"]) if "assignee" in self._pull_request else None
 
     @property
-    def assignees(self) -> list[UserObject]:
+    def assignees(self) -> list[User]:
         assignees_list = self._pull_request.get("assignees", [])
-        return [UserObject(assignee) for assignee in assignees_list if assignee]
+        return [User(assignee) for assignee in assignees_list if assignee]
 
     @property
     def author_association(self) -> AuthorAssociation:
         return AuthorAssociation(self._pull_request["author_association"])
 
     @property
-    def auto_merge(self) -> AutoMergeObject | None:
-        return AutoMergeObject(self._pull_request["auto_merge"]) if self._pull_request.get("auto_merge") else None
+    def auto_merge(self) -> AutoMerge | None:
+        return AutoMerge(self._pull_request["auto_merge"]) if self._pull_request.get("auto_merge") else None
 
     @property
-    def base(self) -> HeadBaseObject:
+    def base(self) -> HeadBase:
         """Pull request's base branch info."""
-        return HeadBaseObject(self._pull_request["base"])
+        return HeadBase(self._pull_request["base"])
 
     @property
     def body(self) -> str | None:
@@ -89,9 +89,9 @@ class PullRequestObject:
         return self._pull_request["draft"]
 
     @property
-    def head(self) -> HeadBaseObject:
+    def head(self) -> HeadBase:
         """Pull request's head branch info."""
-        return HeadBaseObject(self._pull_request["head"])
+        return HeadBase(self._pull_request["head"])
 
     @property
     def html_url(self) -> str | None:
@@ -106,8 +106,8 @@ class PullRequestObject:
         return self._pull_request["issue_url"]
 
     @property
-    def labels(self) -> list[LabelObject]:
-        return [LabelObject(label) for label in self._pull_request.get("labels", [])]
+    def labels(self) -> list[Label]:
+        return [Label(label) for label in self._pull_request.get("labels", [])]
 
     @property
     def locked(self) -> bool:
@@ -139,12 +139,12 @@ class PullRequestObject:
         return self._pull_request.get("merged_at")
 
     @property
-    def merged_by(self) -> UserObject | None:
-        return UserObject(self._pull_request["merged_by"]) if self._pull_request.get("merged_by") else None
+    def merged_by(self) -> User | None:
+        return User(self._pull_request["merged_by"]) if self._pull_request.get("merged_by") else None
 
     @property
-    def milestone(self) -> MilestoneObject | None:
-        return MilestoneObject(self._pull_request["milestone"]) if self._pull_request.get("milestone") else None
+    def milestone(self) -> Milestone | None:
+        return Milestone(self._pull_request["milestone"]) if self._pull_request.get("milestone") else None
 
     @property
     def node_id(self) -> str:
@@ -164,12 +164,12 @@ class PullRequestObject:
         return self._pull_request.get("rebaseable")
 
     @property
-    def requested_reviewers(self) -> list[UserObject]:
-        return [UserObject(user) for user in self._pull_request.get("requested_reviewers", [])]
+    def requested_reviewers(self) -> list[User]:
+        return [User(user) for user in self._pull_request.get("requested_reviewers", [])]
 
     @property
-    def requested_teams(self) -> list[TeamObject]:
-        return [TeamObject(team) for team in self._pull_request.get("requested_teams", [])]
+    def requested_teams(self) -> list[Team]:
+        return [Team(team) for team in self._pull_request.get("requested_teams", [])]
 
     @property
     def review_comment_url(self) -> str:
@@ -205,8 +205,8 @@ class PullRequestObject:
         return self._pull_request.get("url")
 
     @property
-    def user(self) -> UserObject | None:
-        return UserObject(self._pull_request["user"]) if self._pull_request.get("user") else None
+    def user(self) -> User | None:
+        return User(self._pull_request["user"]) if self._pull_request.get("user") else None
 
     @property
     def label_names(self) -> list[str]:

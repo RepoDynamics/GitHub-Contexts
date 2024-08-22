@@ -1,15 +1,14 @@
 from ruamel.yaml import YAML
 
-from github_contexts.github.enums import RefType, SecretSource
+from github_contexts.github.enum import RefType, SecretSource, EventType, ActionType
 
-from github_contexts.github.payloads.base import Payload
-from github_contexts.github.payloads.issue_comment import IssueCommentPayload
-from github_contexts.github.payloads.issues import IssuesPayload
-from github_contexts.github.payloads.pull_request import PullRequestPayload
-from github_contexts.github.payloads.push import PushPayload
-from github_contexts.github.payloads.schedule import SchedulePayload
-from github_contexts.github.payloads.workflow_dispatch import WorkflowDispatchPayload
-from github_contexts.github.enums import EventType, ActionType
+from github_contexts.github.payload.base import Payload
+from github_contexts.github.payload.issue_comment import IssueCommentPayload
+from github_contexts.github.payload.issues import IssuesPayload
+from github_contexts.github.payload.pull_request import PullRequestPayload
+from github_contexts.github.payload.push import PushPayload
+from github_contexts.github.payload.schedule import SchedulePayload
+from github_contexts.github.payload.workflow_dispatch import WorkflowDispatchPayload
 
 
 class GitHubContext:

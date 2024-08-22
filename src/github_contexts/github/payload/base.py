@@ -3,8 +3,8 @@
 
 from ruamel.yaml import YAML
 
-from github_contexts.github.payloads.objects.user import UserObject
-from github_contexts.github.payloads.objects.repository import RepositoryObject
+from github_contexts.github.payload.object.user import User
+from github_contexts.github.payload.object.repository import Repository
 
 
 class Payload:
@@ -50,14 +50,14 @@ class Payload:
         return self._payload.get("organization")
 
     @property
-    def repository(self) -> RepositoryObject | None:
+    def repository(self) -> Repository | None:
         """The repository on GitHub where the event occurred.
 
         This is only available when the event occurs from activity in the repository.
         """
-        return RepositoryObject(self._payload["repository"]) if "repository" in self._payload else None
+        return Repository(self._payload["repository"]) if "repository" in self._payload else None
 
     @property
-    def sender(self) -> UserObject:
+    def sender(self) -> User:
         """The GitHub user that triggered the event."""
-        return UserObject(self._payload["sender"])
+        return User(self._payload["sender"])

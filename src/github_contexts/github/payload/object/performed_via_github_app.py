@@ -1,8 +1,8 @@
-from github_contexts.github.enums import EventType
-from github_contexts.github.payloads.objects.user import UserObject
+from github_contexts.github.enum import EventType
+from github_contexts.github.payload.object.user import User
 
 
-class PerformedViaGitHubAppObject:
+class PerformedViaGitHubApp:
 
     def __init__(self, data: dict):
         """
@@ -47,8 +47,8 @@ class PerformedViaGitHubAppObject:
         return self._data["node_id"]
 
     @property
-    def owner(self) -> UserObject | None:
-        return UserObject(self._data["owner"]) if self._data.get("owner") else None
+    def owner(self) -> User | None:
+        return User(self._data["owner"]) if self._data.get("owner") else None
 
     @property
     def permissions(self) -> dict | None:

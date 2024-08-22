@@ -1,8 +1,8 @@
-from github_contexts.github.payloads.base import Payload
-from github_contexts.github.enums import ActionType
-from github_contexts.github.payloads.objects.comment import CommentObject
-from github_contexts.github.payloads.objects.issue import IssueObject
-from github_contexts.github.payloads.objects.changes import IssueCommentEditedChangesObject
+from github_contexts.github.payload.base import Payload
+from github_contexts.github.enum import ActionType
+from github_contexts.github.payload.object.comment import Comment
+from github_contexts.github.payload.object.issue import Issue
+from github_contexts.github.payload.object.changes import IssueCommentEditedChanges
 
 
 class IssueCommentPayload(Payload):
@@ -18,14 +18,14 @@ class IssueCommentPayload(Payload):
         return ActionType(self._payload["action"])
 
     @property
-    def comment(self) -> CommentObject:
+    def comment(self) -> Comment:
         """Comment data."""
-        return CommentObject(self._payload["comment"])
+        return Comment(self._payload["comment"])
 
     @property
-    def issue(self) -> IssueObject:
+    def issue(self) -> Issue:
         """Issue data."""
-        return IssueObject(self._payload["issue"])
+        return Issue(self._payload["issue"])
 
     @property
     def is_on_pull(self) -> bool:
@@ -33,8 +33,8 @@ class IssueCommentPayload(Payload):
         return bool(self.issue.pull_request)
 
     @property
-    def changes(self) -> IssueCommentEditedChangesObject | None:
+    def changes(self) -> IssueCommentEditedChanges | None:
         """The changes to the comment if the action was 'edited'."""
         if self.action == ActionType.EDITED:
-            return IssueCommentEditedChangesObject(self._payload["changes"])
+            return IssueCommentEditedChanges(self._payload["changes"])
         return

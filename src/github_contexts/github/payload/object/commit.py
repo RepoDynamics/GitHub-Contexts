@@ -1,7 +1,7 @@
-from github_contexts.github.payloads.objects.commit_author import CommitAuthorObject
+from github_contexts.github.payload.object.commit_author import CommitAuthor
 
 
-class CommitObject:
+class Commit:
 
     def __init__(self, commit: dict):
         self._commit = commit
@@ -13,14 +13,14 @@ class CommitObject:
         return self._commit.get("added", [])
 
     @property
-    def author(self) -> CommitAuthorObject:
+    def author(self) -> CommitAuthor:
         """Git author information."""
-        return CommitAuthorObject(self._commit["author"])
+        return CommitAuthor(self._commit["author"])
 
     @property
-    def committer(self) -> CommitAuthorObject:
+    def committer(self) -> CommitAuthor:
         """Git committer information."""
-        return CommitAuthorObject(self._commit["committer"])
+        return CommitAuthor(self._commit["committer"])
 
     @property
     def distinct(self) -> bool:

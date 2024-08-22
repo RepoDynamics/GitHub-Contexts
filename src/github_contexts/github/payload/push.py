@@ -1,7 +1,7 @@
-from github_contexts.github.payloads.base import Payload
-from github_contexts.github.payloads.objects.commit import CommitObject
-from github_contexts.github.payloads.objects.commit_author import CommitAuthorObject
-from github_contexts.github.enums import ActionType
+from github_contexts.github.payload.base import Payload
+from github_contexts.github.payload.object.commit import Commit
+from github_contexts.github.payload.object.commit_author import CommitAuthor
+from github_contexts.github.enum import ActionType
 
 
 class PushPayload(Payload):
@@ -34,9 +34,9 @@ class PushPayload(Payload):
         return self._payload["before"]
 
     @property
-    def commits(self) -> list[CommitObject]:
+    def commits(self) -> list[Commit]:
         """List of pushed commits."""
-        return [CommitObject(commit) for commit in self._payload["commits"]]
+        return [Commit(commit) for commit in self._payload["commits"]]
 
     @property
     def compare(self) -> str:
@@ -59,14 +59,14 @@ class PushPayload(Payload):
         return self._payload["forced"]
 
     @property
-    def head_commit(self) -> CommitObject | None:
+    def head_commit(self) -> Commit | None:
         """The most recent commit on the branch after the event."""
-        return CommitObject(self._payload["head_commit"]) if self._payload.get("head_commit") else None
+        return Commit(self._payload["head_commit"]) if self._payload.get("head_commit") else None
 
     @property
-    def pusher(self) -> CommitAuthorObject:
+    def pusher(self) -> CommitAuthor:
         """The user that pushed the commits."""
-        return CommitAuthorObject(self._payload["pusher"])
+        return CommitAuthor(self._payload["pusher"])
 
     @property
     def ref(self) -> str:

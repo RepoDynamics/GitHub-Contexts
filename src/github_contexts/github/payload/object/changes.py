@@ -1,38 +1,38 @@
-from github_contexts.github.payloads.objects.issue import IssueObject
-from github_contexts.github.payloads.objects.repository import RepositoryObject
+from github_contexts.github.payload.object.issue import Issue
+from github_contexts.github.payload.object.repository import Repository
 
 
-class IssueOpenedChangesObject:
-
-    def __init__(self, changes: dict):
-        self._changes = changes
-        return
-
-    @property
-    def old_issue(self) -> IssueObject | None:
-        return IssueObject(self._changes["old_issue"]) if self._changes.get("old_issue") else None
-
-    @property
-    def old_repository(self) -> RepositoryObject:
-        return RepositoryObject(self._changes["old_repository"])
-
-
-class IssueTransferredChangesObject:
+class IssueOpenedChanges:
 
     def __init__(self, changes: dict):
         self._changes = changes
         return
 
     @property
-    def new_issue(self) -> IssueObject:
-        return IssueObject(self._changes["new_issue"])
+    def old_issue(self) -> Issue | None:
+        return Issue(self._changes["old_issue"]) if self._changes.get("old_issue") else None
 
     @property
-    def new_repository(self) -> RepositoryObject:
-        return RepositoryObject(self._changes["new_repository"])
+    def old_repository(self) -> Repository:
+        return Repository(self._changes["old_repository"])
 
 
-class IssueEditedChangesObject:
+class IssueTransferredChanges:
+
+    def __init__(self, changes: dict):
+        self._changes = changes
+        return
+
+    @property
+    def new_issue(self) -> Issue:
+        return Issue(self._changes["new_issue"])
+
+    @property
+    def new_repository(self) -> Repository:
+        return Repository(self._changes["new_repository"])
+
+
+class IssueEditedChanges:
 
     def __init__(self, changes: dict):
         self._changes = changes
@@ -47,7 +47,7 @@ class IssueEditedChangesObject:
         return self._changes.get("title")
 
 
-class PullRequestEditedChangesObject:
+class PullRequestEditedChanges:
 
     def __init__(self, changes: dict):
         self._changes = changes
@@ -72,7 +72,7 @@ class PullRequestEditedChangesObject:
         return self._changes.get("title", {}).get("from")
 
 
-class IssueCommentEditedChangesObject:
+class IssueCommentEditedChanges:
 
     def __init__(self, changes: dict):
         self._changes = changes
