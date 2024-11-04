@@ -1,46 +1,48 @@
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 
-class Reactions:
+
+class Reactions(_PropertyDict):
 
     def __init__(self, reactions: dict):
-        self._reactions = reactions
+        super().__init__(reactions)
         return
 
     @property
     def plus_one(self) -> int:
-        return self._reactions["+1"]
+        return self._data["+1"]
 
     @property
     def minus_one(self) -> int:
-        return self._reactions["-1"]
+        return self._data["-1"]
 
     @property
     def confused(self) -> int:
-        return self._reactions["confused"]
+        return self._data["confused"]
 
     @property
     def eyes(self) -> int:
-        return self._reactions["eyes"]
+        return self._data["eyes"]
 
     @property
     def heart(self) -> int:
-        return self._reactions["heart"]
+        return self._data["heart"]
 
     @property
     def hooray(self) -> int:
-        return self._reactions["hooray"]
+        return self._data["hooray"]
 
     @property
     def laugh(self) -> int:
-        return self._reactions["laugh"]
+        return self._data["laugh"]
 
     @property
     def rocket(self) -> int:
-        return self._reactions["rocket"]
+        return self._data["rocket"]
 
     @property
     def total_count(self) -> int:
-        return self._reactions["total_count"]
+        return self._data["total_count"]
 
     @property
     def url(self) -> str:
-        return self._reactions["url"]
+        return self._data["url"]
