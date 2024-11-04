@@ -10,14 +10,14 @@ class WorkflowDispatchPayload(Payload):
     @property
     def inputs(self) -> dict | None:
         """Input arguments of the dispatch evenet."""
-        return self._payload["inputs"]
+        return self._data["inputs"]
 
     @property
     def ref(self) -> str:
         """The target reference of the dispatch event."""
-        return self._payload["ref"]
+        return self._data["ref"]
 
     @property
     def workflow(self) -> str:
         """The workflow file name of the dispatch event."""
-        return self._payload["workflow"]
+        return self._data["workflow"]
