@@ -10,4 +10,4 @@ class SchedulePayload(Payload):
     @property
     def schedule(self) -> str:
         """The schedule that triggered the event."""
-        return self._payload["schedule"]
+        return self._data["schedule"]
