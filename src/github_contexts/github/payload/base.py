@@ -1,13 +1,11 @@
 """Base class for all GitHub webhook payloads."""
 
-
-from ruamel.yaml import YAML
-
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 from github_contexts.github.payload.object.user import User
 from github_contexts.github.payload.object.repository import Repository
 
 
-class Payload:
+class Payload(_PropertyDict):
     """
     The full webhook payload of the triggering event.
 
@@ -17,11 +15,8 @@ class Payload:
     """
 
     def __init__(self, payload: dict):
-        self._payload = dict(sorted(payload.items()))
+        super().__init__(payload)
         return
-
-    def __str__(self):
-        return YAML(typ=["rt", "string"]).dumps(self._payload, add_final_eol=True)
 
     @property
     def enterprise(self) -> dict | None:
@@ -30,7 +25,7 @@ class Payload:
         This is only available when the webhook is configured on an enterprise account
         or an organization that's part of an enterprise account.
         """
-        return self._payload.get("enterprise")
+        return self._data.get("enterprise")
 
     @property
     def installation(self) -> dict | None:
@@ -38,7 +33,7 @@ class Payload:
 
         This is only available when the event is configured for and sent to a GitHub App.
         """
-        return self._payload.get("installation")
+        return self._data.get("installation")
 
     @property
     def organization(self) -> dict | None:
@@ -47,7 +42,7 @@ class Payload:
         This is only available when the event occurs from activity in a repository owned by an organization,
         or when the webhook is configured for an organization.
         """
-        return self._payload.get("organization")
+        return self._data.get("organization")
 
     @property
     def repository(self) -> Repository | None:
@@ -55,9 +50,9 @@ class Payload:
 
         This is only available when the event occurs from activity in the repository.
         """
-        return Repository(self._payload["repository"]) if "repository" in self._payload else None
+        return Repository(self._data["repository"]) if "repository" in self._data else None
 
     @property
     def sender(self) -> User:
         """The GitHub user that triggered the event."""
-        return User(self._payload["sender"])
+        return User(self._data["sender"])
