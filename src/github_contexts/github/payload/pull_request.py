@@ -20,12 +20,12 @@ class PullRequestPayload(Payload):
 
     @property
     def action(self) -> ActionType:
-        return ActionType(self._payload["action"])
+        return ActionType(self._data["action"])
 
     @property
     def number(self) -> int:
         """Pull request number"""
-        return self._payload["number"]
+        return self._data["number"]
 
     @property
     def pull_request(self) -> PullRequest:
@@ -43,7 +43,7 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'synchronize' action.
         """
-        return self._payload.get("after")
+        return self._data.get("after")
 
     @property
     def assignee(self) -> User | None:
@@ -51,7 +51,7 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'assigned' and 'unassigned' events.
         """
-        return User(self._payload.get("assignee"))
+        return User(self._data.get("assignee"))
 
     @property
     def before(self) -> str | None:
@@ -60,13 +60,13 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'synchronize' action.
         """
-        return self._payload.get("before")
+        return self._data.get("before")
 
     @property
     def changes(self) -> PullRequestEditedChanges | None:
         """The changes to the pull request if the action was 'edited'."""
         if self.action == ActionType.EDITED:
-            return PullRequestEditedChanges(self._payload["changes"])
+            return PullRequestEditedChanges(self._data["changes"])
         return
 
     @property
@@ -75,7 +75,7 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'labeled' and 'unlabeled' events.
         """
-        return Label(self._payload["label"]) if self._payload.get("label") else None
+        return Label(self._data["label"]) if self._data.get("label") else None
 
     @property
     def milestone(self) -> Milestone | None:
@@ -83,14 +83,14 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'milestoned' and 'demilestoned' events.
         """
-        return Milestone(self._payload.get("milestone"))
+        return Milestone(self._data.get("milestone"))
 
     @property
     def reason(self) -> str | None:
         """This is only available for the
         'auto_merge_disabled', 'auto_merge_disabled', 'dequeued' events.
         """
-        return self._payload.get("reason")
+        return self._data.get("reason")
 
     @property
     def requested_reviewer(self) -> User | None:
@@ -98,7 +98,7 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'review_request_removed', 'review_requested' events.
         """
-        return User(self._payload["requested_reviewer"]) if self._payload.get("requested_reviewer") else None
+        return User(self._data["requested_reviewer"]) if self._data.get("requested_reviewer") else None
 
     @property
     def requested_team(self) -> Team | None:
@@ -106,4 +106,4 @@ class PullRequestPayload(Payload):
 
         This is only available for the 'review_request_removed', 'review_requested' events.
         """
-        return Team(self._payload["requested_team"]) if self._payload.get("requested_team") else None
+        return Team(self._data["requested_team"]) if self._data.get("requested_team") else None
