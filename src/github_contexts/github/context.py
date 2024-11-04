@@ -1,7 +1,5 @@
-from ruamel.yaml import YAML
-
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 from github_contexts.github.enum import RefType, SecretSource, EventType, ActionType
-
 from github_contexts.github.payload.base import Payload
 from github_contexts.github.payload.issue_comment import IssueCommentPayload
 from github_contexts.github.payload.issues import IssuesPayload
@@ -11,7 +9,7 @@ from github_contexts.github.payload.schedule import SchedulePayload
 from github_contexts.github.payload.workflow_dispatch import WorkflowDispatchPayload
 
 
-class GitHubContext:
+class GitHubContext(_PropertyDict):
     """
     The 'github' context of the workflow run.
 
@@ -23,29 +21,9 @@ class GitHubContext:
     """
 
     def __init__(self, context: dict):
-        payload_manager = {
-            EventType.ISSUES: IssuesPayload,
-            EventType.PUSH: PushPayload,
-            EventType.ISSUE_COMMENT: IssueCommentPayload,
-            EventType.PULL_REQUEST: PullRequestPayload,
-            EventType.PULL_REQUEST_TARGET: PullRequestPayload,
-            EventType.SCHEDULE: SchedulePayload,
-            EventType.WORKFLOW_DISPATCH: WorkflowDispatchPayload,
-        }
-        payload = context.pop("event")
         self._token = context.pop("token")
-        self._context = dict(sorted(context.items()))
-        self._payload = (
-            payload_manager[self.event_name](payload=payload) if self.event_name in payload_manager
-            else Payload(payload=payload)
-        )
+        super().__init__(context)
         return
-
-    def __str__(self):
-        return YAML(typ=["rt", "string"]).dumps(self._context, add_final_eol=True)
-
-    def __getitem__(self, item):
-        return self._context[item]
 
     @property
     def action(self) -> str | None:
@@ -60,7 +38,7 @@ class GitHubContext:
         and the second script will be named `__run_2`.
         Similarly, the second invocation of `actions/checkout` will be `actionscheckout2`.
         """
-        return self._context.get("action")
+        return self._data.get("action")
 
     @property
     def action_path(self) -> str | None:
@@ -69,24 +47,24 @@ class GitHubContext:
         You can use this path to access files located in the same repository as the action,
         for example by changing directories to the path.
         """
-        return self._context.get("action_path")
+        return self._data.get("action_path")
 
     @property
     def action_ref(self) -> str | None:
         """For a step executing an action, this is the ref of the action being executed. For example, `v2`."""
-        return self._context.get("action_ref")
+        return self._data.get("action_ref")
 
     @property
     def action_repository(self) -> str | None:
         """For a step executing an action, this is the owner and repository name of the action being executed.
         For example, `actions/checkout`.
         """
-        return self._context.get("action_repository")
+        return self._data.get("action_repository")
 
     @property
     def action_status(self) -> str | None:
         """For a composite action, the current result of the composite action."""
-        return self._context.get("action_status")
+        return self._data.get("action_status")
 
     @property
     def actor(self) -> str:
@@ -96,17 +74,17 @@ class GitHubContext:
         Any workflow re-runs will use the privileges of `actor`,
         even if the actor initiating the re-run (`triggering_actor`) has different privileges.
         """
-        return self._context["actor"]
+        return self._data["actor"]
 
     @property
     def actor_id(self) -> str:
         """The account ID of the person or app that triggered the initial workflow run, e.g., 1234567."""
-        return self._context["actor_id"]
+        return self._data["actor_id"]
 
     @property
     def api_url(self) -> str:
         """The URL of the GitHub REST API."""
-        return self._context["api_url"]
+        return self._data["api_url"]
 
     @property
     def base_ref(self):
@@ -115,7 +93,7 @@ class GitHubContext:
         This property is only available when the event that triggers a workflow run
         is either pull_request or pull_request_target.
         """
-        return self._context["base_ref"]
+        return self._data["base_ref"]
 
     @property
     def env(self) -> str:
@@ -123,7 +101,7 @@ class GitHubContext:
 
         This file is unique to the current step and is a different file for each step in a job.
         """
-        return self._context["env"]
+        return self._data["env"]
 
     @property
     def event(self) -> IssueCommentPayload | IssuesPayload | PullRequestPayload | PushPayload | SchedulePayload | WorkflowDispatchPayload | Payload:
@@ -136,22 +114,35 @@ class GitHubContext:
         For example, for a workflow run triggered by the [push event](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push),
         this object contains the contents of the [push webhook payload](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads#push).
         """
-        return self._payload
+        payload_manager = {
+            EventType.ISSUES: IssuesPayload,
+            EventType.PUSH: PushPayload,
+            EventType.ISSUE_COMMENT: IssueCommentPayload,
+            EventType.PULL_REQUEST: PullRequestPayload,
+            EventType.PULL_REQUEST_TARGET: PullRequestPayload,
+            EventType.SCHEDULE: SchedulePayload,
+            EventType.WORKFLOW_DISPATCH: WorkflowDispatchPayload,
+        }
+        payload = (
+            payload_manager[self.event_name](payload=self._data["payload"]) if self.event_name in payload_manager
+            else Payload(payload=self._data["payload"])
+        )
+        return payload
 
     @property
     def event_name(self) -> EventType:
         """The event type that triggered the workflow."""
-        return EventType(self._context["event_name"])
+        return EventType(self._data["event_name"])
 
     @property
     def event_path(self) -> str:
         """The path to the file on the runner that contains the full event webhook payload."""
-        return self._context["event_path"]
+        return self._data["event_path"]
 
     @property
     def graphql_url(self) -> str:
         """The URL of the GitHub GraphQL API."""
-        return self._context["graphql_url"]
+        return self._data["graphql_url"]
 
     @property
     def head_ref(self) -> str | None:
@@ -160,7 +151,7 @@ class GitHubContext:
         This is only available when the event that triggers a workflow run is
         either 'pull_request' or 'pull_request_target'.
         """
-        return self._context.get("head_ref")
+        return self._data.get("head_ref")
 
     @property
     def job(self) -> str | None:
@@ -169,7 +160,7 @@ class GitHubContext:
 
         This is set by the Actions runner, and is only available within the execution steps of a job.
         """
-        return self._context.get("job")
+        return self._data.get("job")
 
     @property
     def path(self) -> str:
@@ -177,7 +168,7 @@ class GitHubContext:
 
         This file is unique to the current step and is a different file for each step in a job.
         """
-        return self._context["path"]
+        return self._data["path"]
 
     @property
     def ref(self) -> str:
@@ -196,7 +187,7 @@ class GitHubContext:
           for pull requests it is `refs/pull/<pr_number>/merge`,
           and for tags it is `refs/tags/<tag_name>`.
         """
-        return self._context["ref"]
+        return self._data["ref"]
 
     @property
     def ref_name(self) -> str:
@@ -207,49 +198,49 @@ class GitHubContext:
          - This value matches the branch or tag name shown on GitHub, e.g., `main`, `dev/1`.
          - For pull requests, the format is `refs/pull/<pr_number>/merge`.
          """
-        return self._context["ref_name"]
+        return self._data["ref_name"]
 
     @property
     def ref_protected(self) -> bool:
         """Whether the branch or tag that triggered the workflow run is protected."""
-        return self._context["ref_protected"]
+        return self._data["ref_protected"]
 
     @property
     def ref_type(self) -> RefType:
         """The type of the ref that triggered the event, either 'branch' or 'tag'."""
-        return RefType(self._context["ref_type"])
+        return RefType(self._data["ref_type"])
 
     @property
     def repository(self) -> str:
         """Full name of the repository, i.e. `<owner_username>/<repo_name>`,
         e.g., 'RepoDynamics/RepoDynamics'.
         """
-        return self._context["repository"]
+        return self._data["repository"]
 
     @property
     def repository_id(self) -> str:
         """The ID of the repository, e.g., `123456789`."""
-        return self._context["repository_id"]
+        return self._data["repository_id"]
 
     @property
     def repository_owner(self) -> str:
         """GitHub username of the repository owner."""
-        return self._context["repository_owner"]
+        return self._data["repository_owner"]
 
     @property
     def repository_owner_id(self) -> str:
         """The account ID of the repository owner, e.g., `1234567`."""
-        return self._context["repository_owner_id"]
+        return self._data["repository_owner_id"]
 
     @property
     def repository_url(self) -> str:
         """The Git URL of the repository, e.g., `git://github.com/RepoDynamics/GitHub-Contexts.git`."""
-        return self._context["repositoryUrl"]
+        return self._data["repositoryUrl"]
 
     @property
     def retention_days(self) -> str:
         """The number of days that workflow run logs and artifacts are kept."""
-        return self._context["retention_days"]
+        return self._data["retention_days"]
 
     @property
     def run_id(self) -> str:
@@ -257,7 +248,7 @@ class GitHubContext:
 
         This number does not change when the workflow is re-run.
         """
-        return self._context["run_id"]
+        return self._data["run_id"]
 
     @property
     def run_number(self) -> str:
@@ -267,7 +258,7 @@ class GitHubContext:
         and increments with each new run.
         This number does not change when the workflow is re-run.
         """
-        return self._context["run_number"]
+        return self._data["run_number"]
 
     @property
     def run_attempt(self) -> str:
@@ -275,17 +266,17 @@ class GitHubContext:
 
         This number begins at 1 for the workflow run's first attempt, and increments with each re-run.
         """
-        return self._context["run_attempt"]
+        return self._data["run_attempt"]
 
     @property
     def secret_source(self) -> SecretSource:
         """The source of a secret used in a workflow."""
-        return SecretSource(self._context["secret_source"])
+        return SecretSource(self._data["secret_source"])
 
     @property
     def server_url(self) -> str:
         """The URL of the GitHub server, e.g., `https://github.com`."""
-        return self._context["server_url"]
+        return self._data["server_url"]
 
     @property
     def sha(self) -> str:
@@ -298,7 +289,7 @@ class GitHubContext:
         ----------
         - [GitHub Docs: Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
         """
-        return self._context["sha"]
+        return self._data["sha"]
 
     @property
     def token(self) -> str:
@@ -317,7 +308,7 @@ class GitHubContext:
         Any workflow re-runs will use the privileges of `actor`,
         even if the actor initiating the re-run (`triggering_actor`) has different privileges.
         """
-        return self._context["triggering_actor"]
+        return self._data["triggering_actor"]
 
     @property
     def workflow(self) -> str:
@@ -326,19 +317,19 @@ class GitHubContext:
         If the workflow file doesn't specify a name,
         the value of this property is the full path of the workflow file in the repository.
         """
-        return self._context["workflow"]
+        return self._data["workflow"]
 
     @property
     def workflow_ref(self) -> str:
         """The ref path to the workflow,
         e.g., `octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch`.
         """
-        return self._context["workflow_ref"]
+        return self._data["workflow_ref"]
 
     @property
     def workflow_sha(self) -> str:
         """The commit SHA hash of the workflow file."""
-        return self._context["workflow_sha"]
+        return self._data["workflow_sha"]
 
     @property
     def workspace(self) -> str:
@@ -346,7 +337,7 @@ class GitHubContext:
         and the default location of your repository when using the
         [checkout action](https://github.com/actions/checkout).
         """
-        return self._context["workspace"]
+        return self._data["workspace"]
 
     @property
     def repository_name(self) -> str:
