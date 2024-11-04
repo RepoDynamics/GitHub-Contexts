@@ -1,3 +1,4 @@
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 from github_contexts.github.enum import ActiveLockReason, AuthorAssociation, State
 from github_contexts.github.payload.object.label import Label
 from github_contexts.github.payload.object.user import User
@@ -7,7 +8,7 @@ from github_contexts.github.payload.object.pull_request import PullRequest
 from github_contexts.github.payload.object.reactions import Reactions
 
 
-class Issue:
+class Issue(_PropertyDict):
     """
     The `issue` object contained in the payload of the `issues` and `issue_comment` events.
     """
@@ -19,131 +20,131 @@ class Issue:
         issue : dict
             The `issue` dictionary contained in the payload.
         """
-        self._issue = issue
+        super().__init__(issue)
         return
 
     @property
     def active_lock_reason(self) -> ActiveLockReason:
-        return ActiveLockReason(self._issue["active_lock_reason"])
+        return ActiveLockReason(self._data["active_lock_reason"])
 
     @property
     def assignee(self) -> User | None:
-        return User(self._issue["assignee"]) if "assignee" in self._issue else None
+        return User(self._data["assignee"]) if "assignee" in self._data else None
 
     @property
     def assignees(self) -> list[User]:
-        assignees_list = self._issue.get("assignees", [])
+        assignees_list = self._data.get("assignees", [])
         return [User(assignee) for assignee in assignees_list if assignee]
 
     @property
     def author_association(self) -> AuthorAssociation:
-        return AuthorAssociation(self._issue["author_association"])
+        return AuthorAssociation(self._data["author_association"])
 
     @property
     def body(self) -> str | None:
         """Contents of the issue."""
-        return self._issue["body"]
+        return self._data["body"]
 
     @property
     def closed_at(self) -> str | None:
-        return self._issue["closed_at"]
+        return self._data["closed_at"]
 
     @property
     def comments(self) -> int:
-        return self._issue["comments"]
+        return self._data["comments"]
 
     @property
     def comments_url(self) -> str:
-        return self._issue["comments_url"]
+        return self._data["comments_url"]
 
     @property
     def created_at(self) -> str:
-        return self._issue["created_at"]
+        return self._data["created_at"]
 
     @property
     def draft(self) -> bool | None:
-        return self._issue.get("draft")
+        return self._data.get("draft")
 
     @property
     def events_url(self) -> str:
-        return self._issue["events_url"]
+        return self._data["events_url"]
 
     @property
     def html_url(self) -> str:
-        return self._issue["html_url"]
+        return self._data["html_url"]
 
     @property
     def id(self) -> int:
-        return self._issue["id"]
+        return self._data["id"]
 
     @property
     def labels(self) -> list[Label]:
-        return [Label(label) for label in self._issue.get("labels", [])]
+        return [Label(label) for label in self._data.get("labels", [])]
 
     @property
     def labels_url(self) -> str:
-        return self._issue["labels_url"]
+        return self._data["labels_url"]
 
     @property
     def locked(self) -> bool | None:
-        return self._issue.get("locked")
+        return self._data.get("locked")
 
     @property
     def milestone(self) -> Milestone | None:
-        return Milestone(self._issue["milestone"]) if self._issue.get("milestone") else None
+        return Milestone(self._data["milestone"]) if self._data.get("milestone") else None
 
     @property
     def node_id(self) -> str:
-        return self._issue["node_id"]
+        return self._data["node_id"]
 
     @property
     def number(self) -> int:
-        return self._issue["number"]
+        return self._data["number"]
 
     @property
     def performed_via_github_app(self) -> PerformedViaGitHubApp | None:
-        return PerformedViaGitHubApp(self._issue["performed_via_github_app"]) if self._issue.get("performed_via_github_app") else None
+        return PerformedViaGitHubApp(self._data["performed_via_github_app"]) if self._data.get("performed_via_github_app") else None
 
     @property
     def pull_request(self) -> PullRequest | None:
-        return PullRequest(self._issue["pull_request"]) if self._issue.get("pull_request") else None
+        return PullRequest(self._data["pull_request"]) if self._data.get("pull_request") else None
 
     @property
     def reactions(self) -> Reactions:
-        return Reactions(self._issue["reactions"])
+        return Reactions(self._data["reactions"])
 
     @property
     def repository_url(self) -> str:
-        return self._issue["repository_url"]
+        return self._data["repository_url"]
 
     @property
     def state(self) -> State | None:
-        return State(self._issue["state"]) if self._issue.get("state") else None
+        return State(self._data["state"]) if self._data.get("state") else None
 
     @property
     def state_reason(self) -> str | None:
-        return self._issue.get("state_reason")
+        return self._data.get("state_reason")
 
     @property
     def timeline_url(self) -> str | None:
-        return self._issue.get("timeline_url")
+        return self._data.get("timeline_url")
 
     @property
     def title(self) -> str:
         """Title of the issue."""
-        return self._issue["title"]
+        return self._data["title"]
 
     @property
     def updated_at(self) -> str:
-        return self._issue["updated_at"]
+        return self._data["updated_at"]
 
     @property
     def url(self) -> str:
-        return self._issue["url"]
+        return self._data["url"]
 
     @property
     def user(self) -> User | None:
-        return User(self._issue["user"]) if self._issue.get("user") else None
+        return User(self._data["user"]) if self._data.get("user") else None
 
     @property
     def label_names(self) -> list[str]:
