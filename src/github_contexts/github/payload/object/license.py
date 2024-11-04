@@ -1,26 +1,28 @@
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 
-class License:
+
+class License(_PropertyDict):
 
     def __init__(self, license_data: dict):
-        self._license = license_data
+        super().__init__(license_data)
         return
 
     @property
     def key(self) -> str:
-        return self._license["key"]
+        return self._data["key"]
 
     @property
     def name(self) -> str:
-        return self._license["name"]
+        return self._data["name"]
 
     @property
     def node_id(self) -> str:
-        return self._license["node_id"]
+        return self._data["node_id"]
 
     @property
     def spdx_id(self) -> str:
-        return self._license["spdx_id"]
+        return self._data["spdx_id"]
 
     @property
     def url(self) -> str:
-        return self._license["url"]
+        return self._data["url"]
