@@ -22,53 +22,53 @@ class PushPayload(Payload):
     @property
     def after(self) -> str:
         """The SHA hash of the most recent commit on the branch after the event."""
-        return self._payload["after"]
+        return self._data["after"]
 
     @property
     def base_ref(self) -> str | None:
-        return self._payload.get("base_ref")
+        return self._data.get("base_ref")
 
     @property
     def before(self) -> str:
         """The SHA hash of the most recent commit on the branch before the event."""
-        return self._payload["before"]
+        return self._data["before"]
 
     @property
     def commits(self) -> list[Commit]:
         """List of pushed commits."""
-        return [Commit(commit) for commit in self._payload["commits"]]
+        return [Commit(commit) for commit in self._data["commits"]]
 
     @property
     def compare(self) -> str:
         """URL comparing the before and after commits."""
-        return self._payload["compare"]
+        return self._data["compare"]
 
     @property
     def created(self) -> bool:
         """Whether the push created the reference."""
-        return self._payload["created"]
+        return self._data["created"]
 
     @property
     def deleted(self) -> bool:
         """Whether the push deleted the reference."""
-        return self._payload["deleted"]
+        return self._data["deleted"]
 
     @property
     def forced(self) -> bool:
         """Whether the push was forced."""
-        return self._payload["forced"]
+        return self._data["forced"]
 
     @property
     def head_commit(self) -> Commit | None:
         """The most recent commit on the branch after the event."""
-        return Commit(self._payload["head_commit"]) if self._payload.get("head_commit") else None
+        return Commit(self._data["head_commit"]) if self._data.get("head_commit") else None
 
     @property
     def pusher(self) -> CommitAuthor:
         """The user that pushed the commits."""
-        return CommitAuthor(self._payload["pusher"])
+        return CommitAuthor(self._data["pusher"])
 
     @property
     def ref(self) -> str:
         """The full reference name that was pushed to, e.g.: 'refs/heads/main', 'refs/tags/v1.0.0'."""
-        return self._payload["ref"]
+        return self._data["ref"]
