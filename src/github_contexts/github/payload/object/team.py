@@ -1,63 +1,64 @@
 from __future__ import annotations
 from typing import Union
 
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 from github_contexts.github.enum import TeamPrivacy
 
 
-class Team:
+class Team(_PropertyDict):
 
     def __init__(self, team: dict):
-        self._team = team
+        super().__init__(team)
         return
 
     @property
     def deleted(self) -> bool | None:
-        return self._team.get("deleted")
+        return self._data.get("deleted")
 
     @property
     def description(self) -> str | None:
-        return self._team.get("description")
+        return self._data.get("description")
 
     @property
     def html_url(self) -> str | None:
-        return self._team.get("html_url")
+        return self._data.get("html_url")
 
     @property
     def id(self) -> int:
-        return self._team["id"]
+        return self._data["id"]
 
     @property
     def members_url(self) -> str | None:
-        return self._team.get("members_url")
+        return self._data.get("members_url")
 
     @property
     def name(self) -> str:
-        return self._team["name"]
+        return self._data["name"]
 
     @property
     def node_id(self) -> str:
-        return self._team["node_id"]
+        return self._data["node_id"]
 
     @property
     def parent(self) -> Union["Team", None]:
-        return Team(self._team["parent"]) if self._team.get("parent") else None
+        return Team(self._data["parent"]) if self._data.get("parent") else None
 
     @property
     def permission(self) -> str | None:
-        return self._team.get("permission")
+        return self._data.get("permission")
 
     @property
     def privacy(self) -> TeamPrivacy | None:
-        return TeamPrivacy(self._team["privacy"]) if self._team.get("privacy") else None
+        return TeamPrivacy(self._data["privacy"]) if self._data.get("privacy") else None
 
     @property
     def repositories_url(self) -> str | None:
-        return self._team.get("repositories_url")
+        return self._data.get("repositories_url")
 
     @property
     def slug(self) -> str | None:
-        return self._team.get("slug")
+        return self._data.get("slug")
 
     @property
     def url(self) -> str | None:
-        return self._team.get("url")
+        return self._data.get("url")
