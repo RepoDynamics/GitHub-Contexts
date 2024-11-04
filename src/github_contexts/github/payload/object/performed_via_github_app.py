@@ -1,8 +1,10 @@
 from github_contexts.github.enum import EventType
 from github_contexts.github.payload.object.user import User
 
+from github_contexts.property_dict import PropertyDict as _PropertyDict
 
-class PerformedViaGitHubApp:
+
+class PerformedViaGitHubApp(_PropertyDict):
 
     def __init__(self, data: dict):
         """
@@ -11,7 +13,7 @@ class PerformedViaGitHubApp:
         data : dict
             The `performed_via_github_app` dictionary contained in the payload.
         """
-        self._data = data
+        super().__init__(data)
         return
 
     @property
