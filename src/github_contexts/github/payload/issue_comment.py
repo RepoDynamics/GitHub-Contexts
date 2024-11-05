@@ -15,17 +15,17 @@ class IssueCommentPayload(Payload):
         """Action that triggered the event;
         either 'created', 'edited', or 'deleted'.
         """
-        return ActionType(self._payload["action"])
+        return ActionType(self._data["action"])
 
     @property
     def comment(self) -> Comment:
         """Comment data."""
-        return Comment(self._payload["comment"])
+        return Comment(self._data["comment"])
 
     @property
     def issue(self) -> Issue:
         """Issue data."""
-        return Issue(self._payload["issue"])
+        return Issue(self._data["issue"])
 
     @property
     def is_on_pull(self) -> bool:
@@ -36,5 +36,5 @@ class IssueCommentPayload(Payload):
     def changes(self) -> IssueCommentEditedChanges | None:
         """The changes to the comment if the action was 'edited'."""
         if self.action == ActionType.EDITED:
-            return IssueCommentEditedChanges(self._payload["changes"])
+            return IssueCommentEditedChanges(self._data["changes"])
         return
