@@ -20,7 +20,7 @@ class IssuesPayload(Payload):
 
     @property
     def action(self) -> ActionType:
-        return ActionType(self._payload["action"])
+        return ActionType(self._data["action"])
 
     @property
     def issue(self) -> Issue:
@@ -30,7 +30,7 @@ class IssuesPayload(Payload):
         ----------
         - [GitHub API Docs](https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#get-an-issue)
         """
-        return Issue(self._payload["issue"])
+        return Issue(self._data["issue"])
 
     @property
     def assignee(self) -> User | None:
@@ -38,17 +38,17 @@ class IssuesPayload(Payload):
 
         This is only available for the 'assigned' and 'unassigned' events.
         """
-        return User(self._payload.get("assignee"))
+        return User(self._data.get("assignee"))
 
     @property
     def changes(self) -> IssueOpenedChanges | IssueEditedChanges | IssueTransferredChanges | None:
         """The changes to the issue if the action was 'edited'."""
         if self.action == ActionType.EDITED:
-            return IssueEditedChanges(self._payload["changes"])
+            return IssueEditedChanges(self._data["changes"])
         if self.action == ActionType.OPENED:
-            return IssueOpenedChanges(self._payload["changes"])
+            return IssueOpenedChanges(self._data["changes"])
         if self.action == ActionType.TRANSFERRED:
-            return IssueTransferredChanges(self._payload["changes"])
+            return IssueTransferredChanges(self._data["changes"])
         return
 
     @property
@@ -57,7 +57,7 @@ class IssuesPayload(Payload):
 
         This is only available for the 'labeled' and 'unlabeled' events.
         """
-        return Label(self._payload["label"]) if self._payload.get("label") else None
+        return Label(self._data["label"]) if self._data.get("label") else None
 
     @property
     def milestone(self) -> Milestone | None:
@@ -65,4 +65,4 @@ class IssuesPayload(Payload):
 
         This is only available for the 'milestoned' and 'demilestoned' events.
         """
-        return Milestone(self._payload.get("milestone"))
+        return Milestone(self._data.get("milestone"))
