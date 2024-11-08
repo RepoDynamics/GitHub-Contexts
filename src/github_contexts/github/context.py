@@ -124,8 +124,8 @@ class GitHubContext(_PropertyDict):
             EventType.WORKFLOW_DISPATCH: WorkflowDispatchPayload,
         }
         payload = (
-            payload_manager[self.event_name](payload=self._data["payload"]) if self.event_name in payload_manager
-            else Payload(payload=self._data["payload"])
+            payload_manager[self.event_name](payload=self._data["event"]) if self.event_name in payload_manager
+            else Payload(payload=self._data["event"])
         )
         return payload
 
