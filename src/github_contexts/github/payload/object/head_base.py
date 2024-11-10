@@ -27,6 +27,11 @@ class HeadBase(_PropertyDict):
         return self._data["ref"]
 
     @property
+    def name(self) -> str:
+        """Alias for 'ref'."""
+        return self.ref
+
+    @property
     def repo(self) -> Repository:
         """The repository that contains the branch."""
         return Repository(self._data["repo"])
@@ -39,3 +44,7 @@ class HeadBase(_PropertyDict):
     @property
     def user(self) -> User | None:
         return User(self._data["user"]) if self._data.get("user") else None
+
+    @property
+    def url(self) -> str:
+        return f"{self.repo.html_url.removesuffix("/")}/tree/{self.ref}"

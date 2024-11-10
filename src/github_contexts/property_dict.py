@@ -18,6 +18,9 @@ class PropertyDict:
     def __getitem__(self, name: str):
         return self._data[name]
 
+    def __setitem__(self, key, value):
+        self._data[key] = value
+
     def __contains__(self, name: str):
         return name in self._data
 

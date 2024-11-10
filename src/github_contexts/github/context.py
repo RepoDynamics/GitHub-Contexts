@@ -269,6 +269,10 @@ class GitHubContext(_PropertyDict):
         return self._data["run_attempt"]
 
     @property
+    def run_url(self) -> str:
+        return f"{self.server_url.removesuffix("/")}/{self.repository}/actions/runs/{self.run_id}"
+
+    @property
     def secret_source(self) -> SecretSource:
         """The source of a secret used in a workflow."""
         return SecretSource(self._data["secret_source"])
