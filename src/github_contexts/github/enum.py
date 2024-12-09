@@ -11,6 +11,11 @@ class ActiveLockReason(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class AuthorAssociation(_Enum):
     OWNER = "OWNER"
@@ -25,6 +30,11 @@ class AuthorAssociation(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class State(_Enum):
     OPEN = "open"
@@ -32,6 +42,11 @@ class State(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class RefType(_Enum):
@@ -41,6 +56,11 @@ class RefType(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class UserType(_Enum):
     USER = "User"
@@ -49,6 +69,11 @@ class UserType(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class EventType(_Enum):
@@ -130,6 +155,11 @@ class EventType(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class ActionType(_Enum):
@@ -253,6 +283,11 @@ class ActionType(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class RepositoryVisibility(_Enum):
     PUBLIC = "public"
@@ -261,6 +296,11 @@ class RepositoryVisibility(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class MergeMethod(_Enum):
@@ -271,6 +311,11 @@ class MergeMethod(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class MergeCommitMessage(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -280,6 +325,11 @@ class MergeCommitMessage(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class MergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -287,6 +337,11 @@ class MergeCommitTitle(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class SquashMergeCommitMessage(_Enum):
@@ -297,6 +352,11 @@ class SquashMergeCommitMessage(_Enum):
     def __str__(self):
         return self.value
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
+
 
 class SquashMergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -304,6 +364,11 @@ class SquashMergeCommitTitle(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class TeamPrivacy(_Enum):
@@ -313,6 +378,11 @@ class TeamPrivacy(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
 
 
 class SecretSource(_Enum):
@@ -325,3 +395,8 @@ class SecretSource(_Enum):
 
     def __str__(self):
         return self.value
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.value == other
+        return self == other
