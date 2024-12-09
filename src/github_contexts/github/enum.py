@@ -8,6 +8,9 @@ class ActiveLockReason(_Enum):
     SPAM = "spam"
     OTHER = None
 
+    def __str__(self):
+        return self.value
+
 
 class AuthorAssociation(_Enum):
     OWNER = "OWNER"
@@ -19,21 +22,33 @@ class AuthorAssociation(_Enum):
     MANNEQUIN = "MANNEQUIN"
     NONE = "NONE"
 
+    def __str__(self):
+        return self.value
+
 
 class State(_Enum):
     OPEN = "open"
     CLOSED = "closed"
+
+    def __str__(self):
+        return self.value
 
 
 class RefType(_Enum):
     BRANCH = "branch"
     TAG = "tag"
 
+    def __str__(self):
+        return self.value
+
 
 class UserType(_Enum):
     USER = "User"
     ORGANIZATION = "Organization"
     BOT = "Bot"
+
+    def __str__(self):
+        return self.value
 
 
 class EventType(_Enum):
@@ -112,6 +127,9 @@ class EventType(_Enum):
     WORKFLOW_DISPATCH = "workflow_dispatch"
     WORKFLOW_JOB = "workflow_job"
     WORKFLOW_RUN = "workflow_run"
+
+    def __str__(self):
+        return self.value
 
 
 class ActionType(_Enum):
@@ -232,11 +250,17 @@ class ActionType(_Enum):
     UNLOCKED = "unlocked"
     UNPINNED = "unpinned"
 
+    def __str__(self):
+        return self.value
+
 
 class RepositoryVisibility(_Enum):
     PUBLIC = "public"
     PRIVATE = "private"
     INTERNAL = "internal"
+
+    def __str__(self):
+        return self.value
 
 
 class MergeMethod(_Enum):
@@ -244,16 +268,25 @@ class MergeMethod(_Enum):
     SQUASH = "squash"
     REBASE = "rebase"
 
+    def __str__(self):
+        return self.value
+
 
 class MergeCommitMessage(_Enum):
     PR_TITLE = "PR_TITLE"
     PR_BODY = "PR_BODY"
     BLANK = "BLANK"
 
+    def __str__(self):
+        return self.value
+
 
 class MergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
     MERGE_MESSAGE = "MERGE_MESSAGE"
+
+    def __str__(self):
+        return self.value
 
 
 class SquashMergeCommitMessage(_Enum):
@@ -261,16 +294,25 @@ class SquashMergeCommitMessage(_Enum):
     COMMIT_MESSAGES = "COMMIT_MESSAGES"
     BLANK = "BLANK"
 
+    def __str__(self):
+        return self.value
+
 
 class SquashMergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
     COMMIT_OR_PR_TITLE = "COMMIT_OR_PR_TITLE"
+
+    def __str__(self):
+        return self.value
 
 
 class TeamPrivacy(_Enum):
     OPEN = "open"
     CLOSED = "closed"
     SECRET = "secret"
+
+    def __str__(self):
+        return self.value
 
 
 class SecretSource(_Enum):
@@ -280,3 +322,6 @@ class SecretSource(_Enum):
     DEPENDABOT = "Dependabot"
     CODESPACES = "Codespaces"
     NONE = "None"
+
+    def __str__(self):
+        return self.value
