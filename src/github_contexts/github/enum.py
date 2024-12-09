@@ -16,6 +16,9 @@ class ActiveLockReason(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class AuthorAssociation(_Enum):
     OWNER = "OWNER"
@@ -35,6 +38,9 @@ class AuthorAssociation(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class State(_Enum):
     OPEN = "open"
@@ -47,6 +53,9 @@ class State(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class RefType(_Enum):
@@ -61,6 +70,9 @@ class RefType(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class UserType(_Enum):
     USER = "User"
@@ -74,6 +86,9 @@ class UserType(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class EventType(_Enum):
@@ -160,6 +175,9 @@ class EventType(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class ActionType(_Enum):
@@ -288,6 +306,9 @@ class ActionType(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class RepositoryVisibility(_Enum):
     PUBLIC = "public"
@@ -301,6 +322,9 @@ class RepositoryVisibility(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class MergeMethod(_Enum):
@@ -316,6 +340,9 @@ class MergeMethod(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class MergeCommitMessage(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -330,6 +357,9 @@ class MergeCommitMessage(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class MergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -342,6 +372,9 @@ class MergeCommitTitle(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class SquashMergeCommitMessage(_Enum):
@@ -357,6 +390,9 @@ class SquashMergeCommitMessage(_Enum):
             return self.value == other
         return self == other
 
+    def __hash__(self):
+        return hash((self.__class__, self.value))
+
 
 class SquashMergeCommitTitle(_Enum):
     PR_TITLE = "PR_TITLE"
@@ -369,6 +405,9 @@ class SquashMergeCommitTitle(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class TeamPrivacy(_Enum):
@@ -383,6 +422,9 @@ class TeamPrivacy(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
 
 
 class SecretSource(_Enum):
@@ -400,3 +442,6 @@ class SecretSource(_Enum):
         if isinstance(other, str):
             return self.value == other
         return self == other
+
+    def __hash__(self):
+        return hash((self.__class__, self.value))
