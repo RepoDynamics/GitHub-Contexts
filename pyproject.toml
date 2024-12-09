@@ -16,7 +16,7 @@ namespaces = true
 
 # ----------------------------------------- Project Metadata -------------------------------------
 [project]
-version = "0.0.0.dev19"
+version = "0.0.0.dev20"
 name = "GitHub-Contexts"
 requires-python = ">=3.10"
 dependencies = [

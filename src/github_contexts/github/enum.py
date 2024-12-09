@@ -14,7 +14,7 @@ class ActiveLockReason(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -36,7 +36,7 @@ class AuthorAssociation(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -52,7 +52,7 @@ class State(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -68,7 +68,7 @@ class RefType(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -85,7 +85,7 @@ class UserType(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -174,7 +174,7 @@ class EventType(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -304,7 +304,7 @@ class ActionType(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -321,7 +321,7 @@ class RepositoryVisibility(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -338,7 +338,7 @@ class MergeMethod(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -355,7 +355,7 @@ class MergeCommitMessage(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -371,7 +371,7 @@ class MergeCommitTitle(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -388,7 +388,7 @@ class SquashMergeCommitMessage(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -404,7 +404,7 @@ class SquashMergeCommitTitle(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -421,7 +421,7 @@ class TeamPrivacy(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
@@ -441,7 +441,7 @@ class SecretSource(_Enum):
     def __eq__(self, other):
         if isinstance(other, str):
             return self.value == other
-        return self == other
+        return self is other
 
     def __hash__(self):
         return hash((self.__class__, self.value))
